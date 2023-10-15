@@ -1,0 +1,33 @@
+<h2>Auto Format</h2>
+
+<div style="width: 50%;">
+  <p style="color: grey">Enter CSV file content here:</p>
+  <textarea id="csv-document" tooltip></textarea>
+</div>
+
+<button id="create">Apply</button>
+<button id="cancel">Cancel</button>
+
+<p id="progress"></p>
+<script>
+
+document.getElementById('create').onclick = () => {
+  const textbox = document.getElementById('csv-document');
+  console.log(textbox, textbox.value)
+  const csvStr = textbox.value
+
+  parent.postMessage({ pluginMessage: { type: 'apply-words', csvStr} }, '*')
+}
+
+document.getElementById('cancel').onclick = () => {
+  parent.postMessage({ pluginMessage: { type: 'cancel' } }, '*')
+}
+
+onmessage = event => {
+  let msg = event.data.pluginMessage
+  if ("infoStr" in msg) {
+    document.getElementById("progress").innerHTML = msg.infoStr
+  }
+}
+
+</script>

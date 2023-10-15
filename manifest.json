@@ -1,0 +1,20 @@
+{
+  "name": "autoformat",
+  "id": "1295327459660774045",
+  "api": "1.0.0",
+  "main": "code.js",
+  "capabilities": [],
+  "enableProposedApi": false,
+  "editorType": [
+    "figma"
+  ],
+  "ui": "ui.html",
+  "networkAccess": {
+    "allowedDomains": [
+      "none"
+    ]
+  },
+  "relaunchButtons": [
+    {"command": "format", "name": "Open Formatter", "multipleSelection": true}
+  ]
+}
