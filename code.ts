@@ -77,9 +77,9 @@ async function applyStyleToTextNode(textNode: TextNode, config: WordConfig) {
         continue
       }
       let newfont = { style: "Bold", family: font.family }
-      await figma.loadFontAsync(font)
-      await figma.loadFontAsync(newfont)
       try {
+        await figma.loadFontAsync(font)
+        await figma.loadFontAsync(newfont)
         textNode.setRangeFontName(rangestart, rangeend, newfont)
       } catch (e) {
         console.log(e)
@@ -96,8 +96,6 @@ figma.ui.onmessage = async (msg) => {
   // One way of distinguishing between different types of messages sent from
   // your HTML page is to use an object with a "type" property like this.
   if (msg.type === 'apply-words') {
-
-    let {csvStr} = msg
 
     let nodes = getAllTextNodes()
     let words: WordConfig[] = getWordList(msg.csvStr)
