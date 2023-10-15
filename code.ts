@@ -64,21 +64,21 @@ function getWordList(csvstr: string): WordConfig[] {
 }
 
 async function applyStyleToTextNode(textNode: TextNode, config: WordConfig) {
-  let offset = 0
-
   for (let rangestart of getAllIndicesOf(textNode.characters, config.word)) {
     let rangeend = rangestart + config.word.length
 
     if (config.underscore)
       textNode.setRangeTextDecoration(rangestart, rangeend, 'UNDERLINE')
-    if (config.fat) {
+    if (config.fat || config.cursive) {
       // { family: 'Inter', style: 'Regular' }
       let font = textNode.getRangeFontName(rangestart, rangestart + 1)
       if (font === figma.mixed) {
         figma.notify("Plugin encountered an error: Found charakter with multiple styles. this shouldn't be happening. skipping.")
         continue
       }
-      let newfont = { style: "Bold", family: font.family }
+      let style = config.fat ? "Bold" : "Italic"
+
+      let newfont = { style, family: font.family }
       try {
         await figma.loadFontAsync(font)
         await figma.loadFontAsync(newfont)
