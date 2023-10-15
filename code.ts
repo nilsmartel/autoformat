@@ -26,14 +26,16 @@ function getAllTextNodes() {
 function getAllIndicesOf(str: string, searchStr: string): number[] {
   if (searchStr == "") return []
 
+  let re = new RegExp("\\b" + searchStr + "\\b")
+
   let startIndex = 0
-  let index = str.indexOf(searchStr, startIndex)
   const indices = []
 
-  while (index > -1) {
-    indices.push(index);
-    startIndex = index + searchStr.length;
-    index = str.indexOf(searchStr, startIndex)
+  let match
+  while ((match = re.exec(str)) != null) {
+    indices.push(match.index + startIndex)
+    str = str.substring(match.index + searchStr.length)
+    startIndex += match.index + searchStr.length
   }
 
   return indices;
