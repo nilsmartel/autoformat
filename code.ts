@@ -68,7 +68,11 @@ async function applyStyleToTextNode(textNode: TextNode, config: WordConfig) {
     let rangeend = rangestart + config.word.length
 
     if (config.underscore)
-      textNode.setRangeTextDecoration(rangestart, rangeend, 'UNDERLINE')
+      try {
+        textNode.setRangeTextDecoration(rangestart, rangeend, 'UNDERLINE')
+      } catch (e) {
+        console.log(e)
+      }
     if (config.fat || config.cursive) {
       // { family: 'Inter', style: 'Regular' }
       let font = textNode.getRangeFontName(rangestart, rangestart + 1)
